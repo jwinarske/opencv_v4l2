@@ -2,6 +2,8 @@ cmake_minimum_required (VERSION 3.0)
 
 project ("OpenCV V4L2")
 
+option(BUILD_GL_DISPLAY "Define ENABLE_GL_DISPLAY" ON)
+
 set (V4L2_SOURCE "src/opencv_v4l2.cpp")
 set (MAIN_SOURCE "src/opencv_main.cpp")
 set (INFO_SOURCE "src/opencv_buildinfo.cpp")
@@ -18,6 +20,12 @@ set (OPENCV_BUILDINFO_BIN "opencv-buildinfo")
 
 find_package( OpenCV REQUIRED )
 include_directories( ${OpenCV_INCLUDE_DIRS} )
+
+if(BUILD_GL_DISPLAY)
+    add_compile_options(-DENABLE_DISPLAY -DENABLE_GL_DISPLAY -DENABLE_GPU_UPLOAD)
+    include(FindPkgConfig)
+    pkg_check_modules(EGL REQUIRED egl)
+endif()
 
 # Include the directories containing libraries
 include_directories ("${CMAKE_CURRENT_SOURCE_DIR}/lib")
