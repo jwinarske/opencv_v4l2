@@ -23,7 +23,9 @@ include_directories( ${OpenCV_INCLUDE_DIRS} )
 include_directories ("${CMAKE_CURRENT_SOURCE_DIR}/lib")
 add_subdirectory (lib)
 
-set (CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_RPATH};${V4L2_HELPER_LIB_INSTALL_PATH}")
+if(NOT CMAKE_INSTALL_RPATH)
+    set (CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_RPATH};${V4L2_HELPER_LIB_INSTALL_PATH}")
+endif()
 
 # Specify the compiler flags
 set (GCC_COMPILE_FLAGS -Wall -Wpedantic -Wextra -O3 -Wshadow -std=c++11 -g)
